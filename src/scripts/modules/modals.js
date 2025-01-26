@@ -1,3 +1,5 @@
+import calcScroll from "./calcScroll";
+
 const modals = () => {
   const bingModal = (
     triggerSelector,
@@ -9,15 +11,19 @@ const modals = () => {
     const modal = document.querySelector(modalSelector);
     const close = document.querySelector(closeSelector);
     const windows = document.querySelectorAll("[data-modal]");
+    const scroll = calcScroll();
 
     trigger.forEach((item) => {
       item.addEventListener("click", (e) => {
         if (e.target) e.preventDefault();
+
         windows.forEach((item) => {
           item.style.display = "none";
         });
+
         modal.style.display = "block";
         document.body.style.overflow = "hidden";
+        document.body.style.marginRight = `${scroll}px`;
       });
     });
 
@@ -25,8 +31,10 @@ const modals = () => {
       windows.forEach((item) => {
         item.style.display = "none";
       });
+
       modal.style.display = "none";
       document.body.style.overflow = "auto";
+      document.body.style.marginRight = `0px`;
     });
 
     modal.addEventListener("click", (e) => {
@@ -34,8 +42,10 @@ const modals = () => {
         windows.forEach((item) => {
           item.style.display = "none";
         });
+
         modal.style.display = "none";
         document.body.style.overflow = "auto";
+        document.body.style.marginRight = `0px`;
       }
     });
   };
@@ -66,7 +76,7 @@ const modals = () => {
     ".popup_calc_end_close",
     false
   );
-  showModalByTime(".popup", 60000);
+  showModalByTime(".popup[data-modal]", 60000);
 };
 
 export default modals;
